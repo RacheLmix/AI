@@ -1,13 +1,13 @@
 import { getResponse } from "./chat.js";
 
-let voices = [];
+// let voices = [];
 
-function loadVoices() {
-  voices = speechSynthesis.getVoices();
-}
+// function loadVoices() {
+//   voices = speechSynthesis.getVoices();
+// }
 
-speechSynthesis.onvoiceschanged = loadVoices;
-loadVoices();
+// speechSynthesis.onvoiceschanged = loadVoices;
+// loadVoices();
 
 document.getElementById("userInput").addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
@@ -40,19 +40,19 @@ document.getElementById("userInput").addEventListener("keydown", (event) => {
       chatHistory.appendChild(responseMessageDiv);
 
       chatHistory.scrollTop = chatHistory.scrollHeight;
-      const utterance = new SpeechSynthesisUtterance(response);
-      const vtuberVoice = voices.find(voice => voice.lang === "en-US" && voice.name.toLowerCase().includes("female"));
+    //   const utterance = new SpeechSynthesisUtterance(response);
+    //   const vtuberVoice = voices.find(voice => voice.lang === "en-US" && voice.name.toLowerCase().includes("female"));
 
-      if (vtuberVoice) {
-        utterance.voice = vtuberVoice;
-      } else {
-        const defaultFemaleVoice = voices.find(voice => voice.name.toLowerCase().includes("female"));
-        if (defaultFemaleVoice) {
-          utterance.voice = defaultFemaleVoice;
-        }
-      }
+    //   if (vtuberVoice) {
+    //     utterance.voice = vtuberVoice;
+    //   } else {
+    //     const defaultFemaleVoice = voices.find(voice => voice.name.toLowerCase().includes("female"));
+    //     if (defaultFemaleVoice) {
+    //       utterance.voice = defaultFemaleVoice;
+    //     }
+    //   }
 
-      speechSynthesis.speak(utterance);
+    //   speechSynthesis.speak(utterance);
     }, 5000);
   }
 });

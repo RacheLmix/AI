@@ -8,12 +8,21 @@
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
   </head>
   <body>
-    <div class="container">
+    <div id="loading" class="loading">
+      <div class="spinner"></div>
+    </div>
+    <div class="container" style="display: none;">
       <div class="chat-container">
         <div id="chatHistory" class="chat-history"></div>
         <input type="text" id="userInput" placeholder="Ask me something..." />
       </div>
     </div>
     <script type="module" src="./src/scripts/app.js"></script>
+    <script>
+      window.addEventListener('load', () => {
+        document.getElementById('loading').style.display = 'none';
+        document.querySelector('.container').style.display = 'block';
+      });
+    </script>
   </body>
 </html>

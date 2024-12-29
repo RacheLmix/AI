@@ -20,17 +20,16 @@ const responses = {
     "default": "Bạn nói gì vậy? Mình không hiểu lắm!",
 };
 
-// Tạo một đối tượng Fuse để tìm kiếm nhanh trong responses
+
 const fuse = new Fuse(Object.keys(responses), {
     includeScore: true,
     threshold: 0.4,
 });
 
-// Hàm để lấy phản hồi từ người dùng
 export function getResponse(userInput) {
     const results = fuse.search(userInput);
     if (results.length > 0) {
-        return responses[results[0].item]; // Trả về câu trả lời phù hợp nhất
+        return responses[results[0].item];
     }
-    return responses["default"]; // Nếu không tìm thấy câu trả lời, trả về mặc định
+    return responses["default"];
 }
