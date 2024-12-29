@@ -1,32 +1,36 @@
 import { getResponse } from './chat.js';
 
-document.getElementById('sendButton').addEventListener('click', () => {
-    const userInput = document.getElementById('userInput').value;
-    const chatHistory = document.getElementById('chatHistory');
+document.getElementById('userInput').addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        const userInput = document.getElementById('userInput').value.trim();
+        if (userInput === '') return; // Nếu ô nhập trống, không làm gì
 
-    const userMessageDiv = document.createElement('div');
-    userMessageDiv.className = 'chat-message user-message';
-    userMessageDiv.innerText = `You: ${userInput}`;
-    chatHistory.appendChild(userMessageDiv);
+        const chatHistory = document.getElementById('chatHistory');
 
-    const thinkingMessageDiv = document.createElement('div');
-    thinkingMessageDiv.className = 'chat-message thinking';
-    thinkingMessageDiv.innerText = 'AI is thinking...';
-    chatHistory.appendChild(thinkingMessageDiv);
+        const userMessageDiv = document.createElement('div');
+        userMessageDiv.className = 'chat-message user-message';
+        userMessageDiv.innerText = `${userInput}`;
+        chatHistory.appendChild(userMessageDiv);
 
-    document.getElementById('userInput').value = '';
+        const thinkingMessageDiv = document.createElement('div');
+        thinkingMessageDiv.className = 'chat-message thinking';
+        thinkingMessageDiv.innerText = 'AI is thinking...';
+        chatHistory.appendChild(thinkingMessageDiv);
 
-    chatHistory.scrollTop = chatHistory.scrollHeight;
-
-    setTimeout(() => {
-        const response = getResponse(userInput);
-        chatHistory.removeChild(thinkingMessageDiv);
-
-        const responseMessageDiv = document.createElement('div');
-        responseMessageDiv.className = 'chat-message ai-message';
-        responseMessageDiv.innerText = `AI: ${response}`;
-        chatHistory.appendChild(responseMessageDiv);
+        document.getElementById('userInput').value = '';
 
         chatHistory.scrollTop = chatHistory.scrollHeight;
-    }, 5000);
+
+        setTimeout(() => {
+            const response = getResponse(userInput);
+            chatHistory.removeChild(thinkingMessageDiv);
+
+            const responseMessageDiv = document.createElement('div');
+            responseMessageDiv.className = 'chat-message ai-message';
+            responseMessageDiv.innerText = `${response}`;
+            chatHistory.appendChild(responseMessageDiv);
+
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }, 5000);
+    }
 });

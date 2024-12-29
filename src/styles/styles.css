@@ -17,6 +17,7 @@ body {
     box-sizing: border-box;
     outline: none;
     transition: 0.5s ease-in-out;
+    animation: floatBubble 5s ease-in-out infinite;
 }
 #userInput:focus {
     border-color: #007bff;
@@ -47,7 +48,7 @@ body {
     align-items: center;
     margin-top: 50px;
     width: 100%;
-    height: calc(100vh - 100px); /* Adjust height to fit the viewport */
+    height: calc(100vh - 100px);
     padding: 20px;
     box-sizing: border-box;
     position: relative;
@@ -73,21 +74,24 @@ body {
 }
 
 .user-message {
+    border-radius: 10px;
     align-self: flex-end;
-    background-color: #e0f7fa;
+    background: linear-gradient(135deg, #e1f7ff, #73b8fe);
     animation: slideFadeUp 0.5s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 15px rgba(0, 0, 0, 0.05);
 }
 
 .ai-message {
+    border-radius: 10px;
     align-self: flex-start;
-    background-color: #f1f8e9;
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
     animation: slideFadeIn 0.5s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 15px rgba(0, 0, 0, 0.05);
 }
 
 .thinking {
     font-style: italic;
-    color: #888;
-    animation: slideFadeIn 0.5s ease-in-out;
+    animation: colorText 4s ease-in-out infinite, slideFadeIn 0.5s ease-in-out;
 }
 
 @keyframes slideFadeIn {
@@ -109,5 +113,39 @@ body {
     100% {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+@keyframes floatBubble {
+    0% {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 15px rgba(0, 0, 0, 0.05);
+    }
+    25% {
+        box-shadow: 0 6px 12px rgba(0, 179, 255, 0.15), 0 10px 20px rgba(188, 239, 36, 0.1);
+    }
+    50% {
+        box-shadow: 0 8px 15px rgba(223, 12, 255, 0.2), 0 12px 25px rgba(40, 98, 247, 0.15);
+    }
+    75% {
+        box-shadow: 0 6px 12px rgba(52, 60, 196, 0.951), 0 10px 20px rgba(83, 0, 191, 0.287);
+    }
+    100% {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 15px rgba(0, 0, 0, 0.05);
+    }
+}
+@keyframes colorText {
+    0% {
+        color: #2b2b2b;
+    }
+    25% {
+        color: #ffffff;
+    }
+    50% {
+        color: #515151;
+    }
+    75% {
+        color: #ffffff;
+    }
+    100% {
+        color: #2b2b2b;
     }
 }
