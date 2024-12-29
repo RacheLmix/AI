@@ -1,0 +1,27 @@
+{
+  "name": "2d-ai-vtuber",
+  "version": "1.0.0",
+  "description": "A 2D AI Vtuber project that responds to user questions in a ChatGPT-like manner.",
+  "main": "src/scripts/app.js",
+  "scripts": {
+    "start": "node src/scripts/app.js",
+    "build": "echo 'Build script not defined'",
+    "test": "echo 'Test script not defined'"
+  },
+  "keywords": [
+    "Vtuber",
+    "AI",
+    "ChatGPT",
+    "2D",
+    "canvas"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "body-parser": "^1.19.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
