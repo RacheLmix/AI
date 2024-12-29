@@ -1,36 +1,58 @@
-import { getResponse } from './chat.js';
+import { getResponse } from "./chat.js";
 
-document.getElementById('userInput').addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-        const userInput = document.getElementById('userInput').value.trim();
-        if (userInput === '') return; // Nếu ô nhập trống, không làm gì
+let voices = [];
 
-        const chatHistory = document.getElementById('chatHistory');
+function loadVoices() {
+  voices = speechSynthesis.getVoices();
+}
 
-        const userMessageDiv = document.createElement('div');
-        userMessageDiv.className = 'chat-message user-message';
-        userMessageDiv.innerText = `${userInput}`;
-        chatHistory.appendChild(userMessageDiv);
+speechSynthesis.onvoiceschanged = loadVoices;
+loadVoices();
 
-        const thinkingMessageDiv = document.createElement('div');
-        thinkingMessageDiv.className = 'chat-message thinking';
-        thinkingMessageDiv.innerText = 'AI is thinking...';
-        chatHistory.appendChild(thinkingMessageDiv);
+document.getElementById("userInput").addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    const userInput = document.getElementById("userInput").value.trim();
+    if (userInput === "") return;
 
-        document.getElementById('userInput').value = '';
+    const chatHistory = document.getElementById("chatHistory");
 
-        chatHistory.scrollTop = chatHistory.scrollHeight;
+    const userMessageDiv = document.createElement("div");
+    userMessageDiv.className = "chat-message user-message";
+    userMessageDiv.innerText = `${userInput}`;
+    chatHistory.appendChild(userMessageDiv);
 
-        setTimeout(() => {
-            const response = getResponse(userInput);
-            chatHistory.removeChild(thinkingMessageDiv);
+    const thinkingMessageDiv = document.createElement("div");
+    thinkingMessageDiv.className = "chat-message thinking";
+    thinkingMessageDiv.innerText = "Mina is Writing...";
+    chatHistory.appendChild(thinkingMessageDiv);
 
-            const responseMessageDiv = document.createElement('div');
-            responseMessageDiv.className = 'chat-message ai-message';
-            responseMessageDiv.innerText = `${response}`;
-            chatHistory.appendChild(responseMessageDiv);
+    document.getElementById("userInput").value = "";
 
-            chatHistory.scrollTop = chatHistory.scrollHeight;
-        }, 5000);
-    }
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+
+    setTimeout(() => {
+      const response = getResponse(userInput);
+      chatHistory.removeChild(thinkingMessageDiv);
+
+      const responseMessageDiv = document.createElement("div");
+      responseMessageDiv.className = "chat-message ai-message";
+      responseMessageDiv.innerText = `${response}`;
+      chatHistory.appendChild(responseMessageDiv);
+
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+      const utterance = new SpeechSynthesisUtterance(response);
+      const vtuberVoice = voices.find(voice => voice.lang === "en-US" && voice.name.toLowerCase().includes("female"));
+
+      if (vtuberVoice) {
+        utterance.voice = vtuberVoice;
+      } else {
+        const defaultFemaleVoice = voices.find(voice => voice.name.toLowerCase().includes("female"));
+        if (defaultFemaleVoice) {
+          utterance.voice = defaultFemaleVoice;
+        }
+      }
+
+      speechSynthesis.speak(utterance);
+    }, 5000);
+  }
 });
